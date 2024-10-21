@@ -54,12 +54,12 @@ public class Loader implements ApplicationRunner {
 				break;
 			case "T":
 				Tradicional tradicional = new Tradicional();
-				//tradicional.setCodigo(campos[1]);
+				tradicional.setCodigo(Integer.parseInt(campos[1]));
 				tradicional.setDescricao(campos[2]);
 				tradicional.setMarca(campos[3]);
-				//tradicional.setPreco(campos[4]);
-				//tradicional.setEstoque(campos[5]);
-				//tradicional.setGarantiaMeses(campos[6]);
+				tradicional.setPreco(Float.parseFloat(campos[4]));
+				tradicional.setEstoque(Integer.parseInt(campos[5]));
+				tradicional.setGarantiaMeses(Integer.parseInt(campos[6]));
 				tradicional.setTipoRelogio(campos[7]);
 				tradicional.setTipoPulseira(campos[8]);
 				vendedor.getProdutos().add(tradicional);
@@ -69,14 +69,14 @@ public class Loader implements ApplicationRunner {
 			case "S":
 				
 				Smart smart = new Smart();
-				//smart.setCodigo(campos[1]);
+				smart.setCodigo(Integer.parseInt(campos[1]));
 				smart.setDescricao(campos[2]);
 				smart.setMarca(campos[3]);
-				//smart.setPreco(campos[4]);
-				//smart.setEstoque(campos[5]);
-				//smart.setGarantiaMeses(campos[6]);
-				//smart.setGps(campos[7]);
-				//smart.setBatimentos(campos[8]);
+				smart.setPreco(Float.parseFloat(campos[4]));
+				smart.setEstoque(Integer.parseInt(campos[5]));
+				smart.setGarantiaMeses(Integer.parseInt(campos[6]));
+				smart.setGps(Boolean.parseBoolean(campos[7]));
+				smart.setBatimentos(Boolean.parseBoolean(campos[8]));
 				vendedor.getProdutos().add(smart);
 				
 				break;
