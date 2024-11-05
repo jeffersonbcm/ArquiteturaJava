@@ -12,7 +12,7 @@ import br.edu.infnet.jefferson.model.domain.Municipio;
 //https://servicodados.ibge.gov.br/api/v1/localidades/estados
 //https://servicodados.ibge.gov.br/api/v1/localidades/estados/13/municipios
 
-@FeignClient(url = "https://servicodados.ibge.gov.br/api/v1/localidades", value = "localidadeClient")
+@FeignClient(url = "https://servicodados.ibge.gov.br/api/v1/localidades", name = "localidadeClient")
 public interface LocalidadeClient {
 
 	@GetMapping(value = "/estados")

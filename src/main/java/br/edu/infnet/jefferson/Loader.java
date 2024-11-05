@@ -2,22 +2,20 @@ package br.edu.infnet.jefferson;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
-import br.edu.infnet.jefferson.client.EnderecoClient;
-import br.edu.infnet.jefferson.client.LocalidadeClient;
+import br.edu.infnet.jefferson.model.domain.Carro;
 import br.edu.infnet.jefferson.model.domain.Endereco;
 import br.edu.infnet.jefferson.model.domain.Estado;
-import br.edu.infnet.jefferson.model.domain.Carro;
+import br.edu.infnet.jefferson.model.domain.Locadora;
 import br.edu.infnet.jefferson.model.domain.Moto;
 import br.edu.infnet.jefferson.model.domain.Municipio;
-import br.edu.infnet.jefferson.model.domain.Locadora;
 import br.edu.infnet.jefferson.model.service.LocadoraService;
+import br.edu.infnet.jefferson.model.service.LocalizacaoService;
 
 @Component
 public class Loader implements ApplicationRunner {
@@ -26,22 +24,21 @@ public class Loader implements ApplicationRunner {
 	private LocadoraService locadoraservice;
 	
 	@Autowired
-	private EnderecoClient enderecoClient;
+	private LocalizacaoService localizacaoService;
 	
-	@Autowired
-	private LocalidadeClient localidadeClient;
+	
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		
 		
-		for(Estado estado : localidadeClient.obterEstados()) {
+		for(Estado estado : localizacaoService.obterEstados()) {
 			System.out.println("ESTADO: "+ estado.getNome());
 			
 		}		
 		
 		
-		for(Municipio municipio : localidadeClient.obterMunicipios(13)) {
+		for(Municipio municipio : localizacaoService.obterMunicipios(13)) {
 			System.out.println("MUNICIPIOS: "+ municipio.getNome());
 			
 		}
@@ -58,13 +55,11 @@ public class Loader implements ApplicationRunner {
 			String[] campos = linha.split(";");
 			switch (campos[0].toUpperCase()) {
 			case "L":
-				
-				Endereco endereco = enderecoClient.findByCep(campos[3]);
 
 				locadora = new Locadora();
 				locadora.setCnpj(campos[1]);
 				locadora.setRazaosocial(campos[2]);			
-				locadora.setEndereco(endereco);
+				locadora.setEndereco(new Endereco(campos[3]));
 				
 				locadoraservice.incluir(locadora);
 				
