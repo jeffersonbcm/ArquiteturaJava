@@ -1,0 +1,9 @@
+L;07976147000160;Movida Locação De Veículos S.A.;08745140
+C;Fiat;Mobi;Basic;true
+C;Chevrolet;Onix;Basic;false
+L;45736131000170;Unidas Locadora S.A.;30260070
+M;Honda;Pop;125;40.5
+M;Yamaha;Factor;150;30
+L;16670085000155;Localiza Rent a Car S.A.;31150000
+C;hyundai;HB20;Basic;true
+M;Honda;Titan;150;35 

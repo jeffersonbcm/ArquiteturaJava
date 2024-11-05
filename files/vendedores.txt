@@ -1,9 +1,0 @@
-V;Jefferson Moreira;04661966015;jefferson.moreira@technos.com;69075000
-T;1;Relogio Tradicional;Technos;199.99;500;12;Analogico;Aço
-T;2;Relogio Tradicional;Mormaii;249.99;400;12;Digital;Borracha
-V;Jose Moura;90273072021;jose.moura@technos.com;69075170
-S;3;Relogio Smart;Technos;999.99;300;24;Sim;Sim
-S;4;Relogio Smart;Technos;499.99;600;12;Não;Não
-V;João Carlos;06968128004;joao.carlos@technos.com;69075140
-T;5;Relogio Tradicional;Technos;99.99;1000;12;Analogico;Aço
-S;6;Relogio Smart;Technos;699.99;800;24;Não;Sim

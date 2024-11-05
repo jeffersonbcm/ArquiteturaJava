@@ -2,96 +2,105 @@ package br.edu.infnet.jefferson;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
+import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
 
+import br.edu.infnet.jefferson.client.EnderecoClient;
+import br.edu.infnet.jefferson.client.LocalidadeClient;
 import br.edu.infnet.jefferson.model.domain.Endereco;
-import br.edu.infnet.jefferson.model.domain.Smart;
-import br.edu.infnet.jefferson.model.domain.Tradicional;
-import br.edu.infnet.jefferson.model.domain.Vendedor;
-import br.edu.infnet.jefferson.model.service.VendedorService;
+import br.edu.infnet.jefferson.model.domain.Estado;
+import br.edu.infnet.jefferson.model.domain.Carro;
+import br.edu.infnet.jefferson.model.domain.Moto;
+import br.edu.infnet.jefferson.model.domain.Municipio;
+import br.edu.infnet.jefferson.model.domain.Locadora;
+import br.edu.infnet.jefferson.model.service.LocadoraService;
 
 @Component
 public class Loader implements ApplicationRunner {
 	
-//	private Map<String, Vendedor> mapaVendedores = new HashMap<String, Vendedor>();
 	@Autowired
-	private VendedorService vendedorservice;
+	private LocadoraService locadoraservice;
+	
+	@Autowired
+	private EnderecoClient enderecoClient;
+	
+	@Autowired
+	private LocalidadeClient localidadeClient;
+	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
-
-		// System.out.println("Opa!");
-		FileReader file = new FileReader("files/vendedores.txt");
+		
+		
+		for(Estado estado : localidadeClient.obterEstados()) {
+			System.out.println("ESTADO: "+ estado.getNome());
+			
+		}		
+		
+		
+		for(Municipio municipio : localidadeClient.obterMunicipios(13)) {
+			System.out.println("MUNICIPIOS: "+ municipio.getNome());
+			
+		}
+		
+		
+		FileReader file = new FileReader("files/locadoras.txt");
 		BufferedReader leitura = new BufferedReader(file);
 
-		// System.out.println(leitura.readLine()); //Lê 1 linha
 		String linha = leitura.readLine();
-		Vendedor vendedor = null;
+		Locadora locadora = null;
 				
 		while (linha != null) {
 
 			String[] campos = linha.split(";");
 			switch (campos[0].toUpperCase()) {
-			case "V":
+			case "L":
 				
-				Endereco endereco = new Endereco();
-				endereco.setCep(campos[4]);
+				Endereco endereco = enderecoClient.findByCep(campos[3]);
+
+				locadora = new Locadora();
+				locadora.setCnpj(campos[1]);
+				locadora.setRazaosocial(campos[2]);			
+				locadora.setEndereco(endereco);
 				
-				//Vendedor vendedor = new Vendedor();
-				vendedor = new Vendedor();
-				vendedor.setNome(campos[1]);
-				vendedor.setCpf(campos[2]);
-				vendedor.setEmail(campos[3]);				
-				vendedor.setEndereco(endereco);
-				
-				//System.out.println("Vendedor Cadastrado com Sucesso: "+vendedor);
-//				mapaVendedores.put(vendedor.getCpf(), vendedor);
-				vendedorservice.incluir(vendedor);
+				locadoraservice.incluir(locadora);
 				
 				break;
-			case "T":
-				Tradicional tradicional = new Tradicional();
-				tradicional.setCodigo(Integer.parseInt(campos[1]));
-				tradicional.setDescricao(campos[2]);
-				tradicional.setMarca(campos[3]);
-				tradicional.setPreco(Float.parseFloat(campos[4]));
-				tradicional.setEstoque(Integer.parseInt(campos[5]));
-				tradicional.setGarantiaMeses(Integer.parseInt(campos[6]));
-				tradicional.setTipoRelogio(campos[7]);
-				tradicional.setTipoPulseira(campos[8]);
-				vendedor.getProdutos().add(tradicional);
-				
-				
+			case "M":
+				Moto moto = new Moto();
+				moto.setMarca(campos[1]);
+				moto.setModelo(campos[2]);
+				moto.setCilindrada(campos[3]);
+				moto.setAutonomia(Float.parseFloat(campos[4]));
+					
+				locadora.getVeiculos().add(moto);
+								
 				break;
-			case "S":
+			case "C":
 				
-				Smart smart = new Smart();
-				smart.setCodigo(Integer.parseInt(campos[1]));
-				smart.setDescricao(campos[2]);
-				smart.setMarca(campos[3]);
-				smart.setPreco(Float.parseFloat(campos[4]));
-				smart.setEstoque(Integer.parseInt(campos[5]));
-				smart.setGarantiaMeses(Integer.parseInt(campos[6]));
-				smart.setGps(Boolean.parseBoolean(campos[7]));
-				smart.setBatimentos(Boolean.parseBoolean(campos[8]));
-				vendedor.getProdutos().add(smart);
+				Carro carro = new Carro();
+				carro.setMarca(campos[1]);
+				carro.setModelo(campos[2]);
+				carro.setCategoria(campos[3]);
+				carro.setGps(Boolean.parseBoolean(campos[4]));
+								
+				locadora.getVeiculos().add(carro);
 				
 				break;
 			default:
 				break;
 			}
 
-			// System.out.println(linha);
 			 linha = leitura.readLine();
 
 		}
-		//for (Vendedor v: mapaVendedores.values()) {
-		for (Vendedor v: vendedorservice.ObterLista()) {
+
+		for (Locadora v: locadoraservice.ObterLista()) {
 			
-			System.out.println("Vendedor Cadastrado com Sucesso: "+v);
+			System.out.println("Locadora Cadastrada com Sucesso: "+v);
 		}
 		
 		
