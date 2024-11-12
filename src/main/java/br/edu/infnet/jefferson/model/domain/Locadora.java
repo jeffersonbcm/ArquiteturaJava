@@ -3,12 +3,18 @@ package br.edu.infnet.jefferson.model.domain;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Transient;
 
 @Entity
 @Table(name = "TLocadora")
@@ -20,10 +26,13 @@ public class Locadora {
 	private String cnpj;
 	private String razaosocial;
 	
-	@Transient
+	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)
+	@JoinColumn(name = "idLocadora")
+	@JsonManagedReference
 	private List<Veiculo> veiculos;
 	
-	@Transient
+	@OneToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "idEndereco")
 	private Endereco endereco;
 		
 	public Integer getId() {
@@ -75,8 +84,9 @@ public class Locadora {
 	@Override
 	public String toString() {
 
-		return String.format("[%s] Locadora %s Cadastrada com sucesso! %s; Veiculos: %d", 
+		return String.format("[%s] %d Locadora %s Cadastrada com sucesso! %s; Veiculos: %d", 
 				cnpj,
+				id,
 				razaosocial,
 				endereco,
 				veiculos.size()

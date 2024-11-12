@@ -10,28 +10,25 @@ import org.springframework.stereotype.Component;
 
 import br.edu.infnet.jefferson.model.domain.Carro;
 import br.edu.infnet.jefferson.model.domain.Endereco;
-import br.edu.infnet.jefferson.model.domain.Estado;
 import br.edu.infnet.jefferson.model.domain.Locadora;
 import br.edu.infnet.jefferson.model.domain.Moto;
-import br.edu.infnet.jefferson.model.domain.Municipio;
 import br.edu.infnet.jefferson.model.service.LocadoraService;
-import br.edu.infnet.jefferson.model.service.LocalizacaoService;
+import br.edu.infnet.jefferson.model.service.VeiculoService;
 
 @Component
 public class Loader implements ApplicationRunner {
 	
 	@Autowired
 	private LocadoraService locadoraservice;
-	
+//	@Autowired
+//	private LocalizacaoService localizacaoService;
 	@Autowired
-	private LocalizacaoService localizacaoService;
-	
-	
+	private VeiculoService veiculoService;
 	
 	@Override
 	public void run(ApplicationArguments args) throws Exception {
 		
-		
+		/*
 		for(Estado estado : localizacaoService.obterEstados()) {
 			System.out.println("ESTADO: "+ estado.getNome());
 			
@@ -42,7 +39,7 @@ public class Loader implements ApplicationRunner {
 			System.out.println("MUNICIPIOS: "+ municipio.getNome());
 			
 		}
-		
+		*/
 		
 		FileReader file = new FileReader("files/locadoras.txt");
 		BufferedReader leitura = new BufferedReader(file);
@@ -61,7 +58,9 @@ public class Loader implements ApplicationRunner {
 				locadora.setRazaosocial(campos[2]);			
 				locadora.setEndereco(new Endereco(campos[3]));
 				
-				locadoraservice.incluir(locadora);
+				locadora = locadoraservice.incluir(locadora);
+				
+				System.out.println("LOCADORA ["+locadora+"]");
 				
 				break;
 			case "M":
@@ -70,7 +69,10 @@ public class Loader implements ApplicationRunner {
 				moto.setModelo(campos[2]);
 				moto.setCilindrada(campos[3]);
 				moto.setAutonomia(Float.parseFloat(campos[4]));
-					
+				moto.setLocadora(locadora);
+				
+				veiculoService.incluir(moto);
+				
 				locadora.getVeiculos().add(moto);
 								
 				break;
@@ -81,7 +83,10 @@ public class Loader implements ApplicationRunner {
 				carro.setModelo(campos[2]);
 				carro.setCategoria(campos[3]);
 				carro.setGps(Boolean.parseBoolean(campos[4]));
-								
+				carro.setLocadora(locadora);
+				
+				veiculoService.incluir(carro);
+				
 				locadora.getVeiculos().add(carro);
 				
 				break;
@@ -98,6 +103,7 @@ public class Loader implements ApplicationRunner {
 			System.out.println("Locadora Cadastrada com Sucesso: "+v);
 		}
 		
+		System.out.println("#### findByRazaosocialContaining ####"+ locadoraservice.obterPorRazaosocial("Locadora") );
 		
 		leitura.close();
 	}

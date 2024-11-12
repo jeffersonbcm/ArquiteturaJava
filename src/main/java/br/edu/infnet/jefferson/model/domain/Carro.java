@@ -1,5 +1,10 @@
 package br.edu.infnet.jefferson.model.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "TCarro")
 public class Carro extends Veiculo {
 	private String categoria; 
 	private boolean gps;

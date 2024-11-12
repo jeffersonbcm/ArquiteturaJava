@@ -1,5 +1,10 @@
 package br.edu.infnet.jefferson.model.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "TMoto")
 public class Moto extends Veiculo {
 	private String Cilindrada; 
 	private float Autonomia;

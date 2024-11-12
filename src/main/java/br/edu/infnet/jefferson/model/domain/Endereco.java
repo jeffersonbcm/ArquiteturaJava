@@ -1,6 +1,19 @@
 package br.edu.infnet.jefferson.model.domain;
 
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "TEndereco")
 public class Endereco {
+	
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	
 	private String cep;
 	private String logradouro;
 	private String complemento;
@@ -22,6 +35,15 @@ public class Endereco {
 	public String toString() {
 
 		return "Endereço: " + cep;
+	}
+	
+		
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 
 	public String getCep() {

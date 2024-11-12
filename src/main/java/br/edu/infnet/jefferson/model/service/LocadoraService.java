@@ -1,8 +1,7 @@
 package br.edu.infnet.jefferson.model.service;
 
 import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -20,9 +19,7 @@ public class LocadoraService {
 	@Autowired
 	private LocalizacaoService localizacaoService;
 
-	private Map<String, Locadora> mapaLocadoras = new HashMap<String, Locadora>();
-
-	public void incluir(Locadora locadora) {
+	public Locadora incluir(Locadora locadora) {
 		
 		String cep = locadora.getEndereco().getCep();
 		
@@ -30,13 +27,17 @@ public class LocadoraService {
 		
 		locadora.setEndereco(endereco);
 		
-		mapaLocadoras.put(locadora.getCnpj(), locadora);
-		locadoraRepository.save(locadora);
+		return locadoraRepository.save(locadora);
 	}
 
 	public Collection<Locadora> ObterLista() {
 
-		return mapaLocadoras.values();
+		return (Collection<Locadora>) locadoraRepository.findAll();
 	}
 
-}
+	public List<Locadora> obterPorRazaosocial(String razaosocial) {
+	
+	return locadoraRepository.findByRazaosocialContaining(razaosocial);
+	
+	}
+}	
