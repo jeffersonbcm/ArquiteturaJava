@@ -67,8 +67,9 @@ public class Loader implements ApplicationRunner {
 				Moto moto = new Moto();
 				moto.setMarca(campos[1]);
 				moto.setModelo(campos[2]);
-				moto.setCilindrada(campos[3]);
-				moto.setAutonomia(Float.parseFloat(campos[4]));
+				moto.setValor(Float.parseFloat(campos[3]));
+				moto.setCilindrada(campos[4]);
+				moto.setAutonomia(Float.parseFloat(campos[5]));
 				moto.setLocadora(locadora);
 				
 				veiculoService.incluir(moto);
@@ -81,8 +82,9 @@ public class Loader implements ApplicationRunner {
 				Carro carro = new Carro();
 				carro.setMarca(campos[1]);
 				carro.setModelo(campos[2]);
-				carro.setCategoria(campos[3]);
-				carro.setGps(Boolean.parseBoolean(campos[4]));
+				carro.setValor(Float.parseFloat(campos[3]));
+				carro.setCategoria(campos[4]);
+				carro.setGps(Boolean.parseBoolean(campos[5]));
 				carro.setLocadora(locadora);
 				
 				veiculoService.incluir(carro);
@@ -98,12 +100,12 @@ public class Loader implements ApplicationRunner {
 
 		}
 
-		for (Locadora v: locadoraservice.ObterLista()) {
+		for (Locadora v: locadoraservice.obterLista()) {
 			
 			System.out.println("Locadora Cadastrada com Sucesso: "+v);
 		}
 		
-		System.out.println("#### findByRazaosocialContaining ####"+ locadoraservice.obterPorRazaosocial("Locadora") );
+		System.out.println("#### findByRazaosocialContaining ####"+ locadoraservice.obterPorRazaosocial("locadora") );
 		
 		leitura.close();
 	}

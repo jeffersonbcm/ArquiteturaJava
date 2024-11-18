@@ -9,50 +9,55 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.edu.infnet.jefferson.Constantes;
-import br.edu.infnet.jefferson.model.domain.Locadora;
-import br.edu.infnet.jefferson.model.service.LocadoraService;
+import br.edu.infnet.jefferson.model.domain.Veiculo;
+import br.edu.infnet.jefferson.model.service.VeiculoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 
 @RestController
-@RequestMapping("/locadoras")
-public class LocadoraController {
-	
+@RequestMapping("/veiculos")
+public class VeiculoController {
+
 	@Autowired
-	private LocadoraService locadoraService;
-		
-	@Operation(summary = "Recupera todas as locadoras existentes")
+	private VeiculoService veiculoService;
+
+	@Operation(summary = "Recupera todos os veiculos existentes")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Sucesso"),
+			@ApiResponse(responseCode = "400", description = "Parametros Invalidos"),
+			@ApiResponse(responseCode = "404", description = "Registro não encontrado"),
 			@ApiResponse(responseCode = "500", description = "Erro interno do sistema")
 		})
 	@GetMapping(value = "/lista")
-	public ResponseEntity<Collection<Locadora>> ObterLista() {
-		return ResponseEntity.ok(locadoraService.obterLista());
+	public Collection<Veiculo> ObterLista() {
+
+		return veiculoService.obterLista();
 	}
-	
-	
-	@Operation(summary = "Inclui uma nova locadora")
-	@ApiResponses(value = {
-			@ApiResponse(responseCode = "201", description = "Sucesso"),
-			@ApiResponse(responseCode = "500", description = "Erro interno do sistema")
-		})
-	@PostMapping(value = "/incluir")
-	public ResponseEntity<String> incluir(@RequestBody Locadora locadora) {
-		
-		locadoraService.incluir(locadora);
-		
-		return ResponseEntity.status(HttpStatus.CREATED).body(Constantes.MSG_INCLUSAO_SUCESSO);
+
+	@Operation(summary = "Busca um veiculo pelo valor mínimo e máximo")
+	@GetMapping(value = "/filtrarPorValor")
+	public ResponseEntity<List<Veiculo>> obterListaPorValor(@RequestParam float min, @RequestParam float max) {
+
+		if (min < 0 || max < 0 || min > max) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+		}
+
+		List<Veiculo> veiculos = veiculoService.obterListaPorValor(min, max);
+
+		if (veiculos.isEmpty()) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(veiculos);
+		}
+
+		return ResponseEntity.ok(veiculos);
 	}
-	
-	@Operation(summary = "Exclui uma locadora pelo ID")
+
+	@Operation(summary = "Exclui um veiculo pelo ID")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Sucesso"),
 			@ApiResponse(responseCode = "404", description = "Registro não encontrado"),
@@ -60,49 +65,50 @@ public class LocadoraController {
 		})
 	@DeleteMapping(value = "/{id}/excluir")
 	public ResponseEntity<String> excluir(@PathVariable Integer id) {
-		
-		if(locadoraService.excluir(id)) {
+
+		if (veiculoService.excluir(id)) {
 			return ResponseEntity.ok(Constantes.MSG_EXCLUSAO_SUCESSO);
-			
+
 		}
-		
+
 		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constantes.MSG_EXCLUSAO_NOT_FOUND);
 	}
-	
-	@Operation(summary = "Busca uma locadora pela razão social")
+
+	@Operation(summary = "Busca um veiculo pela marca")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Sucesso"),
 			@ApiResponse(responseCode = "404", description = "Registro não encontrado"),
 			@ApiResponse(responseCode = "500", description = "Erro interno do sistema")
 		})
-	@GetMapping(value = "/buscar/{razaoSocial}")
-	public ResponseEntity<List<Locadora>> obterPorRazaosocial(@PathVariable String razaoSocial){
-		
-		List<Locadora> locadoras = locadoraService.obterPorRazaosocial(razaoSocial);
-		
-		if(locadoras.isEmpty()){
-			
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(locadoras);
+	@GetMapping(value = "/buscar/{marca}")
+	public ResponseEntity<List<Veiculo>> obterPorMarca(@PathVariable String marca) {
+
+		List<Veiculo> veiculos = veiculoService.obterPorMarca(marca);
+
+		if (veiculos.isEmpty()) {
+
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(veiculos);
 		}
-		
-		return ResponseEntity.ok(locadoras);
+
+		return ResponseEntity.ok(veiculos);
+
 	}
-	
-	@Operation(summary = "Busca uma locadora pelo ID")
+
+	@Operation(summary = "Busca um veiculo pelo ID")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Sucesso"),
 			@ApiResponse(responseCode = "404", description = "Registro não encontrado"),
 			@ApiResponse(responseCode = "500", description = "Erro interno do sistema")
 		})
 	@GetMapping(value = "/{id}")
-	public ResponseEntity<Locadora> obterPorId(@PathVariable Integer id) {
+	public ResponseEntity<Veiculo> obterPorId(@PathVariable Integer id) {
 		
-		Locadora locadora = locadoraService.obterPorId(id);
+		Veiculo veiculo = veiculoService.obterPorId(id);
 		
-		if(locadora == null) {
+		if(veiculo == null) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
 		}
 		
-		return ResponseEntity.ok(locadora);
+		return ResponseEntity.ok(veiculo);
 	}
 }

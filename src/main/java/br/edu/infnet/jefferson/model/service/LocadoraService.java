@@ -30,8 +30,13 @@ public class LocadoraService {
 		return locadoraRepository.save(locadora);
 	}
 
-	public Collection<Locadora> ObterLista() {
-
+	public boolean excluir (Integer id) {
+		 locadoraRepository.deleteById(id);
+		 
+		 return true;
+	}
+	
+	public Collection<Locadora> obterLista() {
 		return (Collection<Locadora>) locadoraRepository.findAll();
 	}
 
@@ -40,4 +45,15 @@ public class LocadoraService {
 	return locadoraRepository.findByRazaosocialContaining(razaosocial);
 	
 	}
+	
+	public long obterQtde() {
+
+		return locadoraRepository.count();
+	}
+	
+	public Locadora obterPorId(Integer id) {		
+		return locadoraRepository.findById(id).orElse(null);
+	}
+	
+	
 }	

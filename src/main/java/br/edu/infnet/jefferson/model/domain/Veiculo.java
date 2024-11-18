@@ -24,12 +24,27 @@ public abstract class Veiculo {
 	
 	private String marca;
 	private String modelo;
+	private float valor;
 	
-
 	@ManyToOne
 	@JoinColumn(name = "idLocadora")
 	@JsonBackReference
+	
+	
 	private Locadora locadora;
+	
+	
+	
+	@Override
+	public String toString() {
+
+		return String.format("%s - %s - %.2f", 
+				marca,
+				modelo,
+				valor
+				);
+		
+	}
 
 	public Integer getId() {
 		return id;
@@ -55,16 +70,21 @@ public abstract class Veiculo {
 		this.modelo = modelo;
 	}
 
-	public Locadora getLocaldora() {
+	public float getValor() {
+		return valor;
+	}
+
+	public void setValor(float valor) {
+		this.valor = valor;
+	}
+
+	public Locadora getLocadora() {
 		return locadora;
 	}
 
 	public void setLocadora(Locadora locadora) {
 		this.locadora = locadora;
 	}
-	
-		
-	
-			
+
 		
 }

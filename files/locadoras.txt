@@ -1,9 +1,9 @@
-L;07976147000160;Movida Locação De Veículos S.A.;08745140
-C;Fiat;Mobi;Basic;true;1
-C;Chevrolet;Onix;Basic;false;1
-L;45736131000170;Unidas Locadora S.A.;30260070
-M;Honda;Pop;125;40.5;2
-M;Yamaha;Factor;150;30;2
-L;16670085000155;Localiza Rent a Car S.A.;31150000
-C;hyundai;HB20;Basic;true;3
-M;Honda;Titan;150;35;3
+l;07976147000160;movida locação de veículos s.a.;08745140
+c;fiat;mobi;90;basic;true
+c;chevrolet;onix;100;basic;false
+l;45736131000170;unidas locadora s.a.;30260070
+m;honda;pop;30;125;40.5
+m;yamaha;factor;40;150;30
+l;16670085000155;localiza rent a car s.a.;31150000
+c;hyundai;hb20;80;basic;true
+m;honda;titan;50;150;35
