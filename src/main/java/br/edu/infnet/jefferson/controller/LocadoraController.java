@@ -20,6 +20,7 @@ import br.edu.infnet.jefferson.model.service.LocadoraService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/locadoras")
@@ -45,7 +46,7 @@ public class LocadoraController {
 			@ApiResponse(responseCode = "500", description = "Erro interno do sistema")
 		})
 	@PostMapping(value = "/incluir")
-	public ResponseEntity<String> incluir(@RequestBody Locadora locadora) {
+	public ResponseEntity<String> incluir(@Valid @RequestBody Locadora locadora) {
 		
 		locadoraService.incluir(locadora);
 		
@@ -66,7 +67,7 @@ public class LocadoraController {
 			
 		}
 		
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constantes.MSG_EXCLUSAO_NOT_FOUND);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constantes.MSG_REGISTRO_NOT_FOUND);
 	}
 	
 	@Operation(summary = "Busca uma locadora pela razão social")

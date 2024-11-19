@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -56,7 +57,21 @@ public class VeiculoController {
 
 		return ResponseEntity.ok(veiculos);
 	}
-
+	
+	@Operation(summary = "Alterar valor um veiculo")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Sucesso"),
+			@ApiResponse(responseCode = "500", description = "Erro interno do sistema")
+		})
+	@PatchMapping(value = "/alterar")
+	public ResponseEntity<Veiculo> alterar(@RequestParam Integer id, @RequestParam float valor) {
+		
+		Veiculo veiculo = veiculoService.alterar(id, valor);
+		
+		return ResponseEntity.ok(veiculo);
+	}
+	
+		
 	@Operation(summary = "Exclui um veiculo pelo ID")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Sucesso"),
@@ -71,7 +86,7 @@ public class VeiculoController {
 
 		}
 
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constantes.MSG_EXCLUSAO_NOT_FOUND);
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Constantes.MSG_REGISTRO_NOT_FOUND);
 	}
 
 	@Operation(summary = "Busca um veiculo pela marca")

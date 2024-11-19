@@ -11,6 +11,8 @@ import jakarta.persistence.InheritanceType;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.DecimalMin;
+import jakarta.validation.constraints.NotBlank;
 
 
 @Entity
@@ -22,8 +24,11 @@ public abstract class Veiculo {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 	
+	@NotBlank(message = "A marca do veiculo é obrigatório.")
 	private String marca;
+	@NotBlank(message = "o modelo do veiculo é obrigatório.")
 	private String modelo;
+	@DecimalMin(value = "0.1",message = "O valor deve ser maior que zero")
 	private float valor;
 	
 	@ManyToOne

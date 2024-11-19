@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ import br.edu.infnet.jefferson.model.service.CarroService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/carros")
@@ -42,12 +44,25 @@ public class CarroController {
 			@ApiResponse(responseCode = "500", description = "Erro interno do sistema")
 		})
 	@PostMapping(value = "/incluir")
-	public ResponseEntity<String> incluir(@RequestBody Carro carro) {
+	public ResponseEntity<String> incluir(@Valid @RequestBody Carro carro) {
 		
 		carroService.incluir(carro);
 		
 		return ResponseEntity.status(HttpStatus.CREATED).body(Constantes.MSG_INCLUSAO_SUCESSO);
 	}
 	
-
+	
+	@Operation(summary = "Alterar um carro")
+	@ApiResponses(value = {
+			@ApiResponse(responseCode = "200", description = "Sucesso"),
+			@ApiResponse(responseCode = "500", description = "Erro interno do sistema")
+		})
+	@PutMapping(value = "/alterar")
+	public ResponseEntity<String> alterar(@Valid @RequestBody Carro carro) {
+		
+		carroService.alterar(carro);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(Constantes.MSG_ALTERCAO_SUCESSO);
+	}
+	
 }

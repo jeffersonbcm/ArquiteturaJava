@@ -17,6 +17,7 @@ import br.edu.infnet.jefferson.model.service.MotoService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/motos")
@@ -43,7 +44,7 @@ public class MotoController {
 			@ApiResponse(responseCode = "500", description = "Erro interno do sistema")
 		})
 	@PostMapping(value = "/incluir")
-	public ResponseEntity<String> incluir(@RequestBody Moto moto) {
+	public ResponseEntity<String> incluir(@Valid @RequestBody Moto moto) {
 		
 		motoService.incluir(moto);
 		

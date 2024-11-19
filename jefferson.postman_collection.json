@@ -1,0 +1,396 @@
+{
+	"info": {
+		"_postman_id": "19fc6d16-beca-4686-8751-a9a50b73121e",
+		"name": "jefferson",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "8225460"
+	},
+	"item": [
+		{
+			"name": "locadora",
+			"item": [
+				{
+					"name": "ObterLista",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/locadoras/lista",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"locadoras",
+								"lista"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incluir",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"cnpj\": \"04628426000145\",\r\n    \"razaosocial\": \"technos da amazonia s.a.\",\r\n    \"endereco\": {\r\n        \"cep\": \"69075-150\"\r\n    }\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/locadoras/incluir",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"locadoras",
+								"incluir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/locadoras/4/excluir",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"locadoras",
+								"4",
+								"excluir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "obterPorId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/locadoras/1",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"locadoras",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "FiltrarPorRazaoSocial",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/locadoras/buscar/movida",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"locadoras",
+								"buscar",
+								"movida"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "veiculo",
+			"item": [
+				{
+					"name": "ObterLista",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/veiculos/lista",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"veiculos",
+								"lista"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filtrarPorValor",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/veiculos/filtrarPorValor?min=30&max=50",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"veiculos",
+								"filtrarPorValor"
+							],
+							"query": [
+								{
+									"key": "min",
+									"value": "30",
+									"description": "Valor Minimo"
+								},
+								{
+									"key": "max",
+									"value": "50",
+									"description": "Valor Maximo"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Excluir",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/veiculos/1/excluir",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"veiculos",
+								"1",
+								"excluir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ObterPorId",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/veiculos/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"veiculos",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "filtrarPorMarca",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/veiculos/buscar/honda",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"veiculos",
+								"buscar",
+								"honda"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AlterarValor",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/veiculos/alterar?id=1&valor=999",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"veiculos",
+								"alterar"
+							],
+							"query": [
+								{
+									"key": "id",
+									"value": "1"
+								},
+								{
+									"key": "valor",
+									"value": "999"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "carro",
+			"item": [
+				{
+					"name": "ObterLista",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/carros/lista",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"carros",
+								"lista"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incluir",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"marca\": \"fiat\",\r\n    \"modelo\": \"argo\",\r\n    \"valor\": 110.0,\r\n    \"categoria\": \"basic\",\r\n    \"gps\": true\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/carros/incluir",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"carros",
+								"incluir"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Alterar",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n        \"id\": 2,\r\n        \"marca\": \"fiat\",\r\n        \"modelo\": \"mobi\",\r\n        \"valor\": 999.0,\r\n        \"categoria\": \"basic\",\r\n        \"gps\": true\r\n    }",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/carros/alterar",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"carros",
+								"alterar"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "moto",
+			"item": [
+				{
+					"name": "ObterLista",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "localhost:8090/motos/lista",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"motos",
+								"lista"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Incluir",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"marca\": \"honda\",\r\n    \"modelo\": \"biz\",\r\n    \"valor\": 40.0,\r\n    \"autonomia\": 45.0,\r\n    \"cilindrada\": \"125\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8090/motos/incluir",
+							"host": [
+								"localhost"
+							],
+							"port": "8090",
+							"path": [
+								"motos",
+								"incluir"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

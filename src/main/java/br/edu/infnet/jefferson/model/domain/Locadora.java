@@ -15,6 +15,8 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 @Table(name = "TLocadora")
@@ -24,6 +26,8 @@ public class Locadora {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;	
 	private String cnpj;
+	@NotBlank(message = "A razão social da locadora é obrigatório.")
+	@Size(min = 3, max = 50, message = "O razão social deve ter entre 3 e 50 caracteres.")
 	private String razaosocial;
 	
 	@OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.REMOVE, orphanRemoval = true)

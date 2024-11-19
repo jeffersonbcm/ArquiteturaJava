@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import br.edu.infnet.jefferson.Constantes;
+import br.edu.infnet.jefferson.exceptions.RegistroNaoEncontradoException;
 import br.edu.infnet.jefferson.model.domain.Veiculo;
 import br.edu.infnet.jefferson.model.repository.VeiculoRepository;
 
@@ -18,6 +20,21 @@ public class VeiculoService {
 	public void incluir(Veiculo veiculo) {
 		veiculoRepository.save(veiculo);
 
+	}
+	
+	public Veiculo alterar(Integer id, float valor) {
+
+		Veiculo veiculo = veiculoRepository.findById(id).orElseThrow(() -> 
+		
+		new RegistroNaoEncontradoException(Constantes.MSG_REGISTRO_NOT_FOUND));
+		
+		veiculo.setValor(valor);
+		
+//		if (!carroRepository.existsById(carro.getId())) {
+//			throw new NaoEncontradoException(Constantes.MSG_REGISTRO_NOT_FOUND);
+//		}
+
+		return veiculoRepository.save(veiculo);
 	}
 
 	public Collection<Veiculo> obterLista() {
